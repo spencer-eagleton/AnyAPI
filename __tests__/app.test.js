@@ -11,4 +11,18 @@ describe('AnyAPI routes', () => {
   afterAll(() => {
     pool.end();
   });
+
+  it('should be able to create an item', async () => {
+    const expected = {
+      name: 'Burnside Toilet',
+      type: 'toilet',
+      coords: 420
+    };
+    const res = await request(app)
+      .post('/api/v1/items')
+      .send(expected);
+
+    expect(res.body).toEqual({ id: expect.any(String), ...expected });
+  });
+
 });
