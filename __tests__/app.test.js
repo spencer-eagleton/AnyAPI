@@ -54,29 +54,40 @@ describe('AnyAPI routes', () => {
   it('updates item fetched by Id', async () => {
    
     const initial = {
-      id: expect.any(String),
       name: 'Burnside Toilet',
       type: 'toilet',
       coords: 420
     };
 
-    const item = await request(app).patch('/api/v1/items/').send(initial);
+    const item = await Item.insert(initial);
 
+
+    const res = await request(app).patch(`/api/v1/items/${item.id}`).send({ coords : 500 });
     const expected = {
+    
       id: expect.any(String),
       name: 'Burnside Toilet',
       type: 'toilet',
-      coords: 420,
-      inOperation: true,
+      coords: 500,
     };
     
-    const res = await request(app)
-      .patch(`/api/v1/items/${item.id}`)
-      .send({ inOperation: true });
 
     expect(res.body).toEqual(expected);
     
   });
 
+  it('deletes an item', async () => {
+    const initial = {
+      name: 'Burnside Toilet',
+      type: 'toilet',
+      coords: 420
+    };
+
+    const item = await Item.insert(initial);
+
+
+    const res = await request(app).delete(`/api/v1/items/${item.id}`);
+    expect(res.body).toEqual(item);
+  });
 
 });
