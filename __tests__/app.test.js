@@ -79,7 +79,7 @@ describe('AnyAPI routes', () => {
   it('deletes an item', async () => {
     const initial = {
       name: 'Burnside Toilet',
-      type: 'toilet',
+      type: 'toilets',
       coords: 420
     };
 
