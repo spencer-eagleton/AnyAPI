@@ -6,5 +6,6 @@ CREATE TABLE items (
     id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     name TEXT NOT NULL,
     type TEXT NOT NULL,
-    coords INT
+    coords INT,
+    in_operation BIT,
 );

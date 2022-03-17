@@ -45,7 +45,38 @@ describe('AnyAPI routes', () => {
     expect(res.body).toEqual(expected);
   });
 
-  
+  it('returns 404 for dog not found', async () => {
+    const res = await request(app).get('/api/v1/items/fake-item');
+
+    expect(res.status).toEqual(404);
+  });
+
+  it('updates item fetched by Id', async () => {
+   
+    const initial = {
+      id: expect.any(String),
+      name: 'Burnside Toilet',
+      type: 'toilet',
+      coords: 420
+    };
+
+    const item = await request(app).patch('/api/v1/items/').send(initial);
+
+    const expected = {
+      id: expect.any(String),
+      name: 'Burnside Toilet',
+      type: 'toilet',
+      coords: 420,
+      inOperation: true,
+    };
+    
+    const res = await request(app)
+      .patch(`/api/v1/items/${item.id}`)
+      .send({ inOperation: true });
+
+    expect(res.body).toEqual(expected);
+    
+  });
 
 
 });
